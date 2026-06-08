@@ -7,5 +7,8 @@
     state: started
     enabled: yes
     name: mysqld
+- name: print password
+  debug:
+    msg: "{{ lookup('amazon.aws.secretsmanager_secret', 'roboshop/dev/mysql_root_password', region='us-east-1') | from_json }}"
 - name: setup root password
   command: mysql_secure_installation --set-root-pass "{{ mysql_secret.MYSQL_ROOT_PASSWORD }}"
